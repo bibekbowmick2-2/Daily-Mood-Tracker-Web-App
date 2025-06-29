@@ -23,7 +23,12 @@ class AuthController extends Controller
         $request->validate([
             'name' => 'required',
             'phone' => 'required|regex:/^01[3-9]\d{8}$/|unique:users',
-            'password' => 'required'
+            'password' => [
+                'required',
+                'min:8', 
+                'regex:/[@$!%*?&#]/',
+                'confirmed',
+            ]
         ]);
 
         User::create([
@@ -52,7 +57,7 @@ class AuthController extends Controller
 
         if ($user && Hash::check($request->password, $user->password)) {
             Auth::login($user);
-            return redirect()->route('dashboard');
+            return redirect()->route('welcome');
         }
 
         return back()->withErrors(['Invalid phone or password']);

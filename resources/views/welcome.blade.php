@@ -10,8 +10,30 @@
   @include('components.navbar')
 
   <div style="display: grid; place-items: center; min-height: 100vh; background: linear-gradient(135deg, #6f42c1, #007bff); padding: 20px;">
+  <h1>Welcome {{ auth()->user()->name }} and your number is {{ auth()->user()->phone }}</h1>
     <form method="POST" action="/submit-mood"
       style="background: #fff; padding: 30px; border-radius: 16px; box-shadow: 0 8px 20px rgba(0,0,0,0.08); width: 100%; max-width: 500px; font-family: sans-serif; opacity: 0; animation: fadeIn 0.5s ease-in-out forwards;">
+
+      @csrf
+
+      @if ($errors->any())
+  <div style="background-color: #f8d7da; color: #721c24; padding: 12px 20px; border-radius: 8px; margin-bottom: 20px; border: 1px solid #f5c6cb;">
+    <ul style="list-style: none; padding-left: 0; margin: 0;">
+      @foreach ($errors->all() as $error)
+        <li>• {{ $error }}</li>
+      @endforeach
+    </ul>
+  </div>
+@endif
+
+
+@if (session('success'))
+  <div style="background-color: #d4edda; color: #155724; padding: 12px 20px; border-radius: 8px; margin-bottom: 20px; border: 1px solid #c3e6cb;">
+    {{ session('success') }}
+  </div>
+@endif
+
+
 
       <h2 style="text-align: center; margin-bottom: 20px; color: #333;">Today's Mood</h2>
 

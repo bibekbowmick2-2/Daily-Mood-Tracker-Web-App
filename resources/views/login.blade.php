@@ -5,7 +5,7 @@
     <title>Login</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    
+    <!-- Bootstrap 5 CDN -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
@@ -30,7 +30,7 @@
 <div class="container d-flex align-items-center justify-content-center" style="min-height: 100vh;">
     <div class="col-md-6 col-lg-5">
         <div class="register-card">
-            <h2 class="text-center mb-4 text-primary">Login to your account</h2>
+            <h2 class="text-center mb-4 text-primary">Login Account</h2>
 
             @if ($errors->any())
                 <div class="alert alert-danger">
@@ -46,7 +46,6 @@
                 @csrf
 
                 
-
                 <div class="mb-3">
                     <label for="phone" class="form-label">Phone Number</label>
                     <input type="text" name="phone" class="form-control" id="phone" value="{{ old('phone') }}" placeholder="01XXXXXXXXX" required>
@@ -63,12 +62,15 @@
                 </div>
             </form>
 
-           
+            <p class="text-center mt-4 mb-0">
+                Don't have an account? Please create your account
+                <a href=" {{ route('register') }}" class="text-decoration-none text-primary fw-semibold">Register here</a>
+            </p>
         </div>
     </div>
 </div>
 
-
+<!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
