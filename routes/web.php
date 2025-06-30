@@ -31,10 +31,26 @@ Route::middleware('auth')->group(function () {
     Route::get('/mood_table',[MoodController::class, 'index'], function () {
         return view('mood_table');
     })->name('index');
+
     
+
+
+    Route::delete('/delete/{mood}', [MoodController::class, 'destroy'])->name('destroy');
+    Route::post('/{id}/restore', [MoodController::class, 'restore'])->name('restore');
+    Route::delete('/{id}/force-delete', [MoodController::class, 'forceDelete'])->name('forceDelete');
+    
+Route::get('/edit/{mood}', [App\Http\Controllers\MoodController::class, 'edit'])->name('edit');
+
+
+Route::put('/moods/{mood}', [App\Http\Controllers\MoodController::class, 'update'])->name('update');
+
+
+
+
+
     
     Route::post('/submit-mood', [MoodController::class, 'add'])->name('add');
-    Route::put('/mood/{mood}', [MoodController::class, 'update'])->name('mood.update');
+    
     Route::delete('/mood/{mood}', [MoodController::class, 'destroy'])->name('mood.destroy');
    
 

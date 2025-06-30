@@ -15,7 +15,12 @@ class MoodController extends Controller
     
     $moodData = Mood::with('user')->orderBy('entry_date', 'desc')->get();
 
-    return view('mood_table', compact('moodData'));
+
+
+    $moodData = Mood::with('user')->orderBy('entry_date', 'desc')->get();
+    $trashed = Mood::onlyTrashed()->with('user')->orderBy('deleted_at', 'desc')->get();
+
+        return view('mood_table', compact('moodData', 'trashed'));
 }
 
 
@@ -48,9 +53,21 @@ class MoodController extends Controller
         return redirect()->back()->with('success', 'Mood submitted successfully.');
     }
 
+
+    public function edit(Mood $mood)
+{
+    
+    if (auth()->id() !== $mood->user_id) {
+        abort(403);
+    }
+
+    return view('mood_update', compact('mood'));
+}
+
+
     public function update(Request $request, Mood $mood)
     {
-        // $this->authorize('update', $mood); // optional: add policy
+        
 
         $request->validate([
             'mood' => 'required|in:Happy,Sad,Angry,Excited',
@@ -62,17 +79,48 @@ class MoodController extends Controller
             'note' => $request->note,
         ]);
 
-        return redirect()->back()->with('success', 'Mood updated.');
+       
+        return redirect('/mood_table')->with('success', 'Mood updated.');
+
     }
 
     public function destroy(Mood $mood)
     {
-        // $this->authorize('delete', $mood); // optional: add policy
+        if (Auth::id() !== $mood->user_id) {
+            return redirect()->back()->withErrors('Unauthorized');
+        }
 
         $mood->delete();
-
-        return redirect()->back()->with('success', 'Mood entry deleted.');
+        return redirect('/mood_table')->with('success', 'Mood deleted.');
     }
+
+    public function restore($id)
+    {
+        $mood = Mood::onlyTrashed()->findOrFail($id);
+        if (Auth::id() !== $mood->user_id) {
+            return redirect()->back()->withErrors('Unauthorized');
+        }
+
+        $mood->restore();
+        return redirect('/mood_table')->with('success', 'Mood Restored.');
+    }
+
+
+
+    public function forceDelete($id)
+    {
+        $mood = Mood::onlyTrashed()->findOrFail($id);
+        if (Auth::id() !== $mood->user_id) {
+            return redirect()->back()->withErrors('Unauthorized');
+        }
+
+        $mood->forceDelete();
+        return redirect('/mood_table')->with('success', 'Mood Permanently Deleted.');
+    }
+
+    
+
+   
 }
 
 
