@@ -5,9 +5,26 @@ namespace App\Http\Controllers;
 use App\Models\Mood;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class MoodController extends Controller
 {
+
+
+    public function moodOfTheMonth()
+{
+    $date30DaysAgo = Carbon::now()->subDays(30);
+
+    $topMood = DB::table('moods')
+        ->select('mood', DB::raw('count(*) as count'))
+        ->where('created_at', '>=', $date30DaysAgo)
+        ->groupBy('mood')
+        ->orderByDesc('count')
+        ->first();
+
+    return view('mood-of-the-month', ['topMood' => $topMood]);
+}
 
 
     public function index()

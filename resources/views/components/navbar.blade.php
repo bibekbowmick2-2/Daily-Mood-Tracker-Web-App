@@ -175,7 +175,8 @@
       @auth
         <li><a href="/welcome">Home</a></li>
         <li><a href="/mood_table">Mood History Page</a></li>
-        <li><a href="/contact">Weekly Mood Summary</a></li>
+        <li><a href="/mood-of-the-month">Weekly Mood Summary</a></li>
+
 
         <form method="POST" action="{{ route('logout') }}">
     @csrf

@@ -5,14 +5,20 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MoodController;
+use Illuminate\Support\Facades\Auth;
 
 Route::get('/', function () {
+    if (Auth::check()) {
+        return redirect()->route('welcome');
+    }
     return view('register');
 });
 
 Route::get('/mood_table', function () {
     return view('mood_table');
 });
+
+
 
 
 
@@ -31,6 +37,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/mood_table',[MoodController::class, 'index'], function () {
         return view('mood_table');
     })->name('index');
+
+    Route::get('/mood-of-the-month', [MoodController::class, 'moodOfTheMonth'])->name('moodOfTheMonth');
+
 
     
 

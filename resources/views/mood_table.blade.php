@@ -196,6 +196,9 @@
                                     @csrf @method('DELETE')
                                     <button style="padding: 10px;" class="btn btn-force" onclick="return confirm('Permanently delete?')">Delete Permanently</button>
                                 </form>
+
+                            @else
+                                <span style="color: gray; font-size: 0.85em;">Not allowed</span>
                             @endif
                         </td>
                     </tr>
