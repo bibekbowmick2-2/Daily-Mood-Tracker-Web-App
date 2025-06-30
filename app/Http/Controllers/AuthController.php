@@ -27,7 +27,7 @@ class AuthController extends Controller
                 'required',
                 'min:8', 
                 'regex:/[@$!%*?&#]/',
-                'confirmed',
+                
             ]
         ]);
 

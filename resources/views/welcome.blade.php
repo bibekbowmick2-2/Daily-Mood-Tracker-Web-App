@@ -9,8 +9,11 @@
 
   @include('components.navbar')
 
-  <div style="display: grid; place-items: center; min-height: 100vh; background: linear-gradient(135deg, #6f42c1, #007bff); padding: 20px;">
-  <h1>Welcome {{ auth()->user()->name }} and your number is {{ auth()->user()->phone }}</h1>
+  <div class="container" style="display: grid; place-items: center; min-height: 100vh; background: linear-gradient(135deg, #6f42c1, #007bff); ">
+  
+  
+
+
     <form method="POST" action="/submit-mood"
       style="background: #fff; padding: 30px; border-radius: 16px; box-shadow: 0 8px 20px rgba(0,0,0,0.08); width: 100%; max-width: 500px; font-family: sans-serif; opacity: 0; animation: fadeIn 0.5s ease-in-out forwards;">
 
@@ -92,6 +95,15 @@
     @keyframes fadeIn {
       to { opacity: 1; }
     }
+
+
+    @media (max-width: 767px) {
+        .container {
+            padding: 40px;
+        }
+    }
+
+   
     
   </style>
 

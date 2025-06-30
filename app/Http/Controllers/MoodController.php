@@ -8,6 +8,18 @@ use Illuminate\Support\Facades\Auth;
 
 class MoodController extends Controller
 {
+
+
+    public function index()
+{
+    
+    $moodData = Mood::with('user')->orderBy('entry_date', 'desc')->get();
+
+    return view('mood_table', compact('moodData'));
+}
+
+
+
     public function add(Request $request)
     {
         $request->validate([
